@@ -28,3 +28,6 @@ link_directories(${catkin_LIBRARY_DIRS})
 
 add_executable(test1 src/test1.cpp)
 target_link_libraries(test1 ${catkin_LIBRARIES}) 
+
+add_executable(test2 src/test2.cpp)
+target_link_libraries(test2 ${catkin_LIBRARIES})
