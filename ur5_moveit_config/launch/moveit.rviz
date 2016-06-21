@@ -3,7 +3,8 @@ Panels:
     Help Height: 78
     Name: Displays
     Property Tree Widget:
-      Expanded: ~
+      Expanded:
+        - /TF1/Frames1
       Splitter Ratio: 0.74256
     Tree Height: 366
   - Class: rviz/Help
@@ -76,6 +77,11 @@ Visualization Manager:
             Show Trail: false
             Value: true
           forearm_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          hokuyo_link:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -175,6 +181,11 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          hokuyo_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           shoulder_link:
             Alpha: 1
             Show Axes: false
@@ -232,6 +243,8 @@ Visualization Manager:
           Value: true
         forearm_link:
           Value: false
+        hokuyo_link:
+          Value: false
         shoulder_link:
           Value: false
         tool0:
@@ -263,10 +276,41 @@ Visualization Manager:
                     wrist_2_link:
                       wrist_3_link:
                         ee_link:
-                          {}
+                          hokuyo_link:
+                            {}
                         tool0:
                           {}
       Update Interval: 0
+      Value: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/LaserScan
+      Color: 255; 255; 255
+      Color Transformer: Intensity
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 0
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: LaserScan
+      Position Transformer: XYZ
+      Queue Size: 10
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.003
+      Style: Flat Squares
+      Topic: /hokuyo/laser/scan
+      Unreliable: false
+      Use Fixed Frame: true
+      Use rainbow: true
       Value: true
   Enabled: true
   Global Options:
@@ -283,22 +327,22 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 2.9965
+      Distance: 1.2246
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.113567
-        Y: 0.10592
-        Z: 2.23518e-07
+        X: 0.134692
+        Y: 0.526606
+        Z: 3.42727e-07
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: -0.0352028
+      Pitch: 0.224797
       Target Frame: world
       Value: XYOrbit (rviz)
-      Yaw: 5.89495
+      Yaw: 2.53177
     Saved: ~
 Window Geometry:
   Displays:

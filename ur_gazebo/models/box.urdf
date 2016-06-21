@@ -1,0 +1,85 @@
+<robot name="MBZIRC_box">
+  <!-- Base link -->
+  <link name="box">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+          <box size="1 0.82 1"/>
+      </geometry>
+    </visual>
+    
+	<collision>
+		<origin xyz="0 0 0" rpy="0 0 0" />
+		<geometry>
+			<box size="1 0.82 1"/>
+		</geometry>
+	</collision>
+
+	<inertial>
+		<mass value="1.0" />
+		<inertia ixx="1.0" ixy="0.0" ixz="0.0"
+				iyy="1.0" iyz="0.0"
+				izz="1.0" />
+	</inertial>
+  </link>
+  
+  <joint name="fixed_joint_1" type="fixed">
+      <parent link="box" />
+      <child link = "cyl_handle" />
+      <origin xyz="-0.155 -0.42 0.0" rpy="0.0 0.0 0.0 " />
+  </joint>
+  
+  <link name="cyl_handle">
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5708 0 0" />
+      <geometry>
+          <cylinder length="0.02" radius="0.045" />
+      </geometry>
+    </visual>
+    
+	<collision>
+		<origin xyz="0 0 0" rpy="1.5708 0 0" />
+		<geometry>
+			<cylinder length="0.02" radius="0.045" />
+		</geometry>
+	</collision>
+
+	<inertial>
+		<mass value="0.01" />
+		<inertia ixx="0.01" ixy="0.0" ixz="0.0"
+				iyy="0.01" iyz="0.0"
+				izz="0.01" />
+	</inertial>
+  </link>
+  
+  <joint name="fixed_joint_2" type="fixed">
+      <parent link="cyl_handle" />
+      <child link = "box_handle" />
+      <origin xyz="0.0 -0.04 0.0" rpy="0.0 0.0 0.0 " />
+  </joint>
+  
+  <link name="box_handle">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+          <box size="0.014 0.06 0.014"/>
+      </geometry>
+    </visual>
+    
+	<collision>
+		<origin xyz="0 0 0" rpy="0 0 0" />
+		<geometry>
+			<box size="0.014 0.06 0.014"/>
+		</geometry>
+	</collision>
+
+	<inertial>
+		<mass value="0.01" />
+		<inertia ixx="0.01" ixy="0.0" ixz="0.0"
+				iyy="0.01" iyz="0.0"
+				izz="0.01" />
+	</inertial>
+  </link>
+  
+  
+</robot>
