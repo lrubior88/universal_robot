@@ -12,6 +12,9 @@ find_package(catkin REQUIRED COMPONENTS
   moveit_simple_grasps
   roscpp
   rospy
+  pcl_conversions
+  pcl_ros
+  laser_geometry
 )
 find_package(Eigen REQUIRED)
 
@@ -31,3 +34,6 @@ target_link_libraries(test1 ${catkin_LIBRARIES})
 
 add_executable(test2 src/test2.cpp)
 target_link_libraries(test2 ${catkin_LIBRARIES})
+
+add_executable(laser2pcl src/laser2pcl.cpp)
+target_link_libraries(laser2pcl ${catkin_LIBRARIES})

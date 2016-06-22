@@ -4,7 +4,9 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
+        - /MotionPlanning1/Planning Request1
         - /TF1/Frames1
+        - /PointCloud21/Status1
       Splitter Ratio: 0.74256
     Tree Height: 366
   - Class: rviz/Help
@@ -81,6 +83,11 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          gripper:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
           hokuyo_link:
             Alpha: 1
             Show Axes: false
@@ -137,7 +144,7 @@ Visualization Manager:
         Colliding Link Color: 255; 0; 0
         Goal State Alpha: 1
         Goal State Color: 250; 128; 0
-        Interactive Marker Size: 0
+        Interactive Marker Size: 0.3
         Joint Violation Color: 255; 0; 255
         Planning Group: manipulator
         Query Goal State: true
@@ -177,6 +184,11 @@ Visualization Manager:
             Show Trail: false
             Value: true
           forearm_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          gripper:
             Alpha: 1
             Show Axes: false
             Show Trail: false
@@ -243,6 +255,8 @@ Visualization Manager:
           Value: true
         forearm_link:
           Value: false
+        gripper:
+          Value: true
         hokuyo_link:
           Value: false
         shoulder_link:
@@ -276,8 +290,9 @@ Visualization Manager:
                     wrist_2_link:
                       wrist_3_link:
                         ee_link:
-                          hokuyo_link:
-                            {}
+                          gripper:
+                            hokuyo_link:
+                              {}
                         tool0:
                           {}
       Update Interval: 0
@@ -312,6 +327,36 @@ Visualization Manager:
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/PointCloud2
+      Color: 255; 255; 255
+      Color Transformer: Intensity
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 4096
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: PointCloud2
+      Position Transformer: XYZ
+      Queue Size: 10
+      Selectable: true
+      Size (Pixels): 3
+      Size (m): 0.003
+      Style: Flat Squares
+      Topic: /hokuyo/pcl
+      Unreliable: false
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -327,7 +372,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 1.2246
+      Distance: 1.83989
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
@@ -339,10 +384,10 @@ Visualization Manager:
         Z: 3.42727e-07
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.224797
+      Pitch: 0.434796
       Target Frame: world
       Value: XYOrbit (rviz)
-      Yaw: 2.53177
+      Yaw: 2.70676
     Saved: ~
 Window Geometry:
   Displays:

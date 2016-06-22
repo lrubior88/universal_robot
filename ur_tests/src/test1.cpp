@@ -12,6 +12,8 @@
 #include <geometry_msgs/Pose.h>
 #include <geometry_msgs/Point.h>
 
+#include "std_srvs/Trigger.h"
+
 //Constants
 static const double PI = 3.14159265;
 static const std::string COLLISION_TOPIC = "/collision_object";
@@ -19,6 +21,7 @@ static const std::string COLLISION_TOPIC = "/collision_object";
 
 ros::Publisher pub_collision_obj_; // for MoveIt collision objects
 boost::scoped_ptr<move_group_interface::MoveGroup> group_;
+ros::ServiceClient client;
 
 // Function names
 void move_back_plane(double x_ini, double y_ini, double normal_angle, double d, double &x_end, double &y_end);
@@ -27,7 +30,9 @@ void move_right_plane(double x_ini, double y_ini, double normal_angle, double d,
 void move_left_plane(double x_ini, double y_ini, double normal_angle, double d, double &x_end, double &y_end);
 void turn_right_trajectory(geometry_msgs::Point axes_pos, double normal_angle, double radius);
 int turn_right_trajectory2(geometry_msgs::Point axes_pos, double normal_angle, double radius);
-
+bool saveScan();
+bool go2Pose(geometry_msgs::Point position, tf::Quaternion q, int attempts);
+void scanning_z(geometry_msgs::Point position, tf::Quaternion q, double z_init, double z_end, double interval);
 
 /// -   -   -   -   - MAIN -    -   -   -   - ///
 int main(int argc, char* argv[]){
@@ -47,20 +52,22 @@ int main(int argc, char* argv[]){
 	//~ group_->setPlannerId("SBLkConfigDefault");
     //~ moveit::planning_interface::PlanningSceneInterface planning_scene_interface;
     
+    client = node.serviceClient<std_srvs::Trigger>("/laser2pcl_srv");
+    
 	ROS_INFO("Reference frame: %s", group_->getPlanningFrame().c_str());
 
 	ROS_INFO("Reference frame: %s", group_->getEndEffectorLink().c_str());
 	
 	
-	double m = -1.0/2.0;
-	double n = -1;
-	double x_plane = -0.4;
-	double y_plane = -0.4;
+	double m = 0.0;
+	double n = 0.8;
+	double x_plane = 0.0;
+	double y_plane = 0.8;
 	
 	double x_handle;
 	double y_handle;
 	
-	geometry_msgs::Pose target_pose1;
+
 	
 	double roll = 0.0;
 	double pitch = 0.0;
@@ -104,7 +111,7 @@ int main(int argc, char* argv[]){
 	tf::Quaternion q;
 	q.setRPY(roll, pitch, yaw);
 
-	double d = 0.1;
+	double d = 0.4;
 	double x_target;
 	double y_target;
 	
@@ -180,99 +187,99 @@ int main(int argc, char* argv[]){
 	sleep(5.0);
 
 
-	/* The id of the object is used to identify it. */
-	collision_obj.id = "box2";
-
-	/* A pose for the box (specified relative to frame_id) */
-	box_pose.orientation.x = q.x();
-	box_pose.orientation.y = q.y();
-	box_pose.orientation.z = q.z();
-	box_pose.orientation.w = q.w();
-	box_pose.position.x = axes_pos.x;
-	box_pose.position.y = axes_pos.y;
-	box_pose.position.z = 0.3;
-
-	/* Define a box to add to the world. */
-	collision_obj.header.stamp = ros::Time::now();
-	collision_obj.header.frame_id = "world";
-	collision_obj.operation = moveit_msgs::CollisionObject::ADD;
-	collision_obj.primitives.resize(1);
-	collision_obj.primitives[0].type = shape_msgs::SolidPrimitive::BOX;
-	collision_obj.primitives[0].dimensions.resize(3);
-	collision_obj.primitives[0].dimensions[0] = 0.05;
-	collision_obj.primitives[0].dimensions[1] = 0.01;
-	collision_obj.primitives[0].dimensions[2] = 0.01;
-	collision_obj.primitive_poses.resize(1);
-	collision_obj.primitive_poses[0] = box_pose;
+	//~ /* The id of the object is used to identify it. */
+	//~ collision_obj.id = "box2";
+//~ 
+	//~ /* A pose for the box (specified relative to frame_id) */
+	//~ box_pose.orientation.x = q.x();
+	//~ box_pose.orientation.y = q.y();
+	//~ box_pose.orientation.z = q.z();
+	//~ box_pose.orientation.w = q.w();
+	//~ box_pose.position.x = axes_pos.x;
+	//~ box_pose.position.y = axes_pos.y;
+	//~ box_pose.position.z = 0.3;
+//~ 
+	//~ /* Define a box to add to the world. */
+	//~ collision_obj.header.stamp = ros::Time::now();
+	//~ collision_obj.header.frame_id = "world";
+	//~ collision_obj.operation = moveit_msgs::CollisionObject::ADD;
+	//~ collision_obj.primitives.resize(1);
+	//~ collision_obj.primitives[0].type = shape_msgs::SolidPrimitive::BOX;
+	//~ collision_obj.primitives[0].dimensions.resize(3);
+	//~ collision_obj.primitives[0].dimensions[0] = 0.05;
+	//~ collision_obj.primitives[0].dimensions[1] = 0.01;
+	//~ collision_obj.primitives[0].dimensions[2] = 0.01;
+	//~ collision_obj.primitive_poses.resize(1);
+	//~ collision_obj.primitive_poses[0] = box_pose;
+    //~ 
+	//~ pub_collision_obj_.publish(collision_obj);
+	//~ ros::spinOnce();
+	//~ ROS_INFO("Published collision object box2");
+    //~ sleep(5.0);	
     
-	pub_collision_obj_.publish(collision_obj);
-	ros::spinOnce();
-	ROS_INFO("Published collision object box2");
-    sleep(5.0);	
-    
-    
+	geometry_msgs::Point target_pose1;
+	 
     move_back_plane(x_plane, y_plane, yaw, d, x_target, y_target);
 	ROS_INFO("x:%f,y:%f",x_target,y_target);
 
-	target_pose1.position.x = x_target;
-	target_pose1.position.y = y_target;
-	target_pose1.position.z = 0.3;
-	target_pose1.orientation.x = q.x();
-	target_pose1.orientation.y = q.y();
-	target_pose1.orientation.z = q.z();
-	target_pose1.orientation.w = q.w();
-	
-	moveit::planning_interface::MoveGroup::Plan my_plan;
-	bool success;
-	
-	for(int i=0;i<20;i++){
-		group_->setPoseTarget(target_pose1);
-		success = group_->plan(my_plan);
+	target_pose1.x = x_target;
+	target_pose1.y = y_target;
+	target_pose1.z = 0.34;
+    scanning_z(target_pose1, q, 0.34, 0.4, 0.005);
 
-		ROS_INFO("Visualizing plan 1 (pose goal) %s",success?"":"FAILED");
-		ROS_INFO("Try:%d",i);
-		/* Sleep to give Rviz time to visualize the plan. */
+    move_back_plane(x_plane, y_plane, yaw, d, x_target, y_target);
+    move_left_plane(x_target, y_target, yaw, 0.2, x_target, y_target);
+	ROS_INFO("x:%f,y:%f",x_target,y_target);
+
+	target_pose1.x = x_target;
+	target_pose1.y = y_target;
+	target_pose1.z = 0.34;
+    scanning_z(target_pose1, q, 0.34, 0.4, 0.005);
 	
-		if (success){
-			group_->execute(my_plan); 
-			sleep(5.0);
-			break;
-		}
-	}
+    move_back_plane(x_plane, y_plane, yaw, d, x_target, y_target);
+    move_left_plane(x_target, y_target, yaw, 0.4, x_target, y_target);
+	ROS_INFO("x:%f,y:%f",x_target,y_target);
+
+	target_pose1.x = x_target;
+	target_pose1.y = y_target;
+	target_pose1.z = 0.34;
+    scanning_z(target_pose1, q, 0.34, 0.4, 0.005);
+	
+	
 
 	//~ move_back_plane(axes_pos.x, axes_pos.y, yaw, 0.1, axes_pos.x, axes_pos.y); 
     
-    double radius = 0.1;
-	q.setRPY(PI, 0.0, yaw);
-	double s;
-	geometry_msgs::Pose tool_pose;
-	tool_pose.position.x = axes_pos.x;
-	tool_pose.position.y = axes_pos.y;
-	tool_pose.position.z = axes_pos.z +radius+0.05;
-	tool_pose.orientation.x = q.x();
-	tool_pose.orientation.y = q.y();
-	tool_pose.orientation.z = q.z();
-	tool_pose.orientation.w = q.w();
-	
-	for(int i=0;i<20;i++){
-	
-		group_->setPoseTarget(tool_pose);
-		success = group_->plan(my_plan);
-
-		ROS_INFO("Visualizing plan x (pose goal) %s",success?"":"FAILED");
-		ROS_INFO("Try:%d",i);
-		/* Sleep to give Rviz time to visualize the plan. */
-	
-		if (success){
-			group_->move();
-			sleep(5.0);
-			ROS_INFO("Start position");
-			s = turn_right_trajectory2(axes_pos, yaw, radius);
-			ROS_INFO("Finish trajectory");
-			if(!s) break;
-			sleep(5.0);
-		}
-	}
+    //~ double radius = 0.1;
+	//~ q.setRPY(PI, 0.0, yaw);
+	//~ double s;
+	//~ geometry_msgs::Pose tool_pose;
+	//~ tool_pose.position.x = axes_pos.x;
+	//~ tool_pose.position.y = axes_pos.y;
+	//~ tool_pose.position.z = axes_pos.z +radius+0.05;
+	//~ tool_pose.orientation.x = q.x();
+	//~ tool_pose.orientation.y = q.y();
+	//~ tool_pose.orientation.z = q.z();
+	//~ tool_pose.orientation.w = q.w();
+	//~ 
+	//~ for(int i=0;i<20;i++){
+	//~ 
+		//~ group_->setPoseTarget(tool_pose);
+		//~ success = group_->plan(my_plan);
+//~ 
+		//~ ROS_INFO("Visualizing plan x (pose goal) %s",success?"":"FAILED");
+		//~ ROS_INFO("Try:%d",i);
+		//~ /* Sleep to give Rviz time to visualize the plan. */
+	//~ 
+		//~ if (success){
+			//~ group_->move();
+			//~ sleep(5.0);
+			//~ ROS_INFO("Start position");
+			//~ s = turn_right_trajectory2(axes_pos, yaw, radius);
+			//~ ROS_INFO("Finish trajectory");
+			//~ if(!s) break;
+			//~ sleep(5.0);
+		//~ }
+	//~ }
     
 
     /*Remove object*/
@@ -700,4 +707,74 @@ turn_right_trajectory2(geometry_msgs::Point axes_pos, double normal_angle, doubl
 	sleep(5.0);
                               
 	return 0;
+}
+
+bool 
+saveScan()
+{
+	std_srvs::Trigger srv;
+	if (client.call(srv))
+	{
+		if(srv.response.success)
+		{
+			ROS_INFO("Response: %s", srv.response.message.c_str());
+		}
+		else
+		{
+			ROS_WARN("Service problem");
+		}
+	}
+	else
+	{
+		ROS_ERROR("Failed to call service");
+		return false;
+	}
+	return true;
+}
+bool
+go2Pose(geometry_msgs::Point position, tf::Quaternion q, int attempts)
+{
+	moveit::planning_interface::MoveGroup::Plan my_plan;
+	bool success;
+	geometry_msgs::Pose target_pose;
+	
+	target_pose.position.x = position.x;
+	target_pose.position.y = position.y;
+	target_pose.position.z = position.z;
+	target_pose.orientation.x = q.x();
+	target_pose.orientation.y = q.y();
+	target_pose.orientation.z = q.z();
+	target_pose.orientation.w = q.w();
+	
+
+	
+	for(int i=0;i<attempts;i++){
+		group_->setPoseTarget(target_pose);
+		success = group_->plan(my_plan);
+
+		ROS_INFO("Visualizing plan 1 (pose goal) %s",success?"":"FAILED");
+		ROS_INFO("Try:%d",i);
+		/* Sleep to give Rviz time to visualize the plan. */
+	
+		if (success){
+			group_->execute(my_plan);
+			sleep(1.0);
+			return true;
+		}
+	}
+	return false;
+}
+
+void scanning_z(geometry_msgs::Point position, tf::Quaternion q, double z_init, double z_end, double interval)
+{
+	ROS_INFO("SCANNING_Z --> z_init:%f", z_init);
+	position.z = z_init;
+	while(position.z<z_end)
+	{
+		ROS_INFO("SCANNING_Z ---> x:%f,y:%f,z:%f",position.x,position.y,position.z);
+		go2Pose(position, q, 20);
+		if (saveScan()) 	position.z += interval;
+	}
+	
+	return;
 }
