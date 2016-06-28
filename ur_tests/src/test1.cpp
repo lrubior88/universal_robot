@@ -32,7 +32,9 @@ void turn_right_trajectory(geometry_msgs::Point axes_pos, double normal_angle, d
 int turn_right_trajectory2(geometry_msgs::Point axes_pos, double normal_angle, double radius);
 bool saveScan();
 bool go2Pose(geometry_msgs::Point position, tf::Quaternion q, int attempts);
-void scanning_z(geometry_msgs::Point position, tf::Quaternion q, double z_init, double z_end, double interval);
+void scanning_z(geometry_msgs::Point position, tf::Quaternion q, double z_width, double interval);
+void scanning_x(geometry_msgs::Point position, tf::Quaternion q, double x_width, double interval, double normal_angle);
+void scanning_roll(geometry_msgs::Point position, double interval, double normal_angle);
 
 /// -   -   -   -   - MAIN -    -   -   -   - ///
 int main(int argc, char* argv[]){
@@ -218,34 +220,58 @@ int main(int argc, char* argv[]){
     //~ sleep(5.0);	
     
 	geometry_msgs::Point target_pose1;
-	 
+	
+	//~ // Scanning in z axis 
     move_back_plane(x_plane, y_plane, yaw, d, x_target, y_target);
 	ROS_INFO("x:%f,y:%f",x_target,y_target);
-
 	target_pose1.x = x_target;
 	target_pose1.y = y_target;
 	target_pose1.z = 0.34;
-    scanning_z(target_pose1, q, 0.34, 0.4, 0.005);
+    scanning_z(target_pose1, q, 0.06, 0.002);
 
     move_back_plane(x_plane, y_plane, yaw, d, x_target, y_target);
     move_left_plane(x_target, y_target, yaw, 0.2, x_target, y_target);
 	ROS_INFO("x:%f,y:%f",x_target,y_target);
-
 	target_pose1.x = x_target;
 	target_pose1.y = y_target;
 	target_pose1.z = 0.34;
-    scanning_z(target_pose1, q, 0.34, 0.4, 0.005);
+    scanning_z(target_pose1, q, 0.06, 0.002);
 	
     move_back_plane(x_plane, y_plane, yaw, d, x_target, y_target);
     move_left_plane(x_target, y_target, yaw, 0.4, x_target, y_target);
 	ROS_INFO("x:%f,y:%f",x_target,y_target);
-
 	target_pose1.x = x_target;
 	target_pose1.y = y_target;
 	target_pose1.z = 0.34;
-    scanning_z(target_pose1, q, 0.34, 0.4, 0.005);
+    scanning_z(target_pose1, q, 0.06, 0.002);
 	
+	// Scanning in x axis
+	q.setRPY(1.5708, 0.0, yaw);
 	
+    move_back_plane(x_plane, y_plane, yaw, d, x_target, y_target);
+    move_left_plane(x_target, y_target, yaw, 0.21, x_target, y_target);
+	ROS_INFO("x:%f,y:%f",x_target,y_target);
+	target_pose1.x = x_target;
+	target_pose1.y = y_target;
+	target_pose1.z = 0.2;
+    scanning_x(target_pose1, q, 0.06, 0.002, yaw);
+    
+    move_back_plane(x_plane, y_plane, yaw, d, x_target, y_target);
+    move_left_plane(x_target, y_target, yaw, 0.21, x_target, y_target);
+	ROS_INFO("x:%f,y:%f",x_target,y_target);
+	target_pose1.x = x_target;
+	target_pose1.y = y_target;
+	target_pose1.z = 0.375;
+    scanning_x(target_pose1, q, 0.06, 0.002, yaw);
+    
+    move_back_plane(x_plane, y_plane, yaw, d, x_target, y_target);
+    move_left_plane(x_target, y_target, yaw, 0.21, x_target, y_target);
+	ROS_INFO("x:%f,y:%f",x_target,y_target);
+	target_pose1.x = x_target;
+	target_pose1.y = y_target;
+	target_pose1.z = 0.6;
+    scanning_x(target_pose1, q, 0.06, 0.002, yaw);
+	//~ 
 
 	//~ move_back_plane(axes_pos.x, axes_pos.y, yaw, 0.1, axes_pos.x, axes_pos.y); 
     
@@ -280,7 +306,99 @@ int main(int argc, char* argv[]){
 			//~ sleep(5.0);
 		//~ }
 	//~ }
+	
+	
+	//~ // Scanning wrenchs in z axis 
+    //~ move_back_plane(x_plane, y_plane, yaw, d, x_target, y_target);
+    //~ move_right_plane(x_target, y_target, yaw, 0.2, x_target, y_target);
+	//~ ROS_INFO("x:%f,y:%f",x_target,y_target);
+	//~ target_pose1.x = x_target;
+	//~ target_pose1.y = y_target;
+	//~ target_pose1.z = 0.42;
+    //~ scanning_z(target_pose1, q, 0.25, 0.005);
+//~ 
+    //~ move_back_plane(x_plane, y_plane, yaw, d, x_target, y_target);
+    //~ move_right_plane(x_target, y_target, yaw, 0.35, x_target, y_target);
+	//~ ROS_INFO("x:%f,y:%f",x_target,y_target);
+	//~ target_pose1.x = x_target;
+	//~ target_pose1.y = y_target;
+	//~ target_pose1.z = 0.42;
+    //~ scanning_z(target_pose1, q, 0.25, 0.005);
+	//~ 
+    //~ move_back_plane(x_plane, y_plane, yaw, d, x_target, y_target);
+    //~ move_right_plane(x_target, y_target, yaw, 0.5, x_target, y_target);
+	//~ ROS_INFO("x:%f,y:%f",x_target,y_target);
+	//~ target_pose1.x = x_target;
+	//~ target_pose1.y = y_target;
+	//~ target_pose1.z = 0.42;
+    //~ scanning_z(target_pose1, q, 0.25, 0.005);
+//~ 
+	//~ q.setRPY(1.5708, 0.0, yaw);
+	//~ 
+    //~ move_back_plane(x_plane, y_plane, yaw, d, x_target, y_target);
+    //~ move_right_plane(x_target, y_target, yaw, 0.25, x_target, y_target);
+	//~ ROS_INFO("x:%f,y:%f",x_target,y_target);
+	//~ target_pose1.x = x_target;
+	//~ target_pose1.y = y_target;
+	//~ target_pose1.z = 0.4;
+    //~ scanning_x(target_pose1, q, 0.2, 0.005, yaw);
+    //~ 
+    //~ move_back_plane(x_plane, y_plane, yaw, d, x_target, y_target);
+    //~ move_right_plane(x_target, y_target, yaw, 0.25, x_target, y_target);
+	//~ ROS_INFO("x:%f,y:%f",x_target,y_target);
+	//~ target_pose1.x = x_target;
+	//~ target_pose1.y = y_target;
+	//~ target_pose1.z = 0.55;
+    //~ scanning_x(target_pose1, q, 0.2, 0.005, yaw);
+    //~ 
+    //~ move_back_plane(x_plane, y_plane, yaw, d, x_target, y_target);
+    //~ move_right_plane(x_target, y_target, yaw, 0.25, x_target, y_target);
+	//~ ROS_INFO("x:%f,y:%f",x_target,y_target);
+	//~ target_pose1.x = x_target;
+	//~ target_pose1.y = y_target;
+	//~ target_pose1.z = 0.7;
+    //~ scanning_x(target_pose1, q, 0.2, 0.005, yaw);
     
+    
+    //~ // Scanning roll
+    //~ move_back_plane(x_plane, y_plane, yaw, d, x_target, y_target);
+	//~ ROS_INFO("x:%f,y:%f",x_target,y_target);
+	//~ target_pose1.x = x_target;
+	//~ target_pose1.y = y_target;
+	//~ target_pose1.z = 0.4;
+    //~ scanning_roll(target_pose1, 0.05, yaw);
+    //~ 
+    //~ move_back_plane(x_plane, y_plane, yaw, d, x_target, y_target);
+    //~ move_left_plane(x_target, y_target, yaw, 0.4, x_target, y_target);
+	//~ ROS_INFO("x:%f,y:%f",x_target,y_target);
+	//~ target_pose1.x = x_target;
+	//~ target_pose1.y = y_target;
+	//~ target_pose1.z = 0.4;
+    //~ scanning_roll(target_pose1, 0.05, yaw);   
+    //~ 
+    //~ move_back_plane(x_plane, y_plane, yaw, d, x_target, y_target);
+    //~ move_left_plane(x_target, y_target, yaw, 0.2, x_target, y_target);
+	//~ ROS_INFO("x:%f,y:%f",x_target,y_target);
+	//~ target_pose1.x = x_target;
+	//~ target_pose1.y = y_target;
+	//~ target_pose1.z = 0.6;
+    //~ scanning_roll(target_pose1, 0.05, yaw);
+    //~ 
+    //~ move_back_plane(x_plane, y_plane, yaw, d, x_target, y_target);
+    //~ move_right_plane(x_target, y_target, yaw, 0.2, x_target, y_target);
+	//~ ROS_INFO("x:%f,y:%f",x_target,y_target);
+	//~ target_pose1.x = x_target;
+	//~ target_pose1.y = y_target;
+	//~ target_pose1.z = 0.6;
+    //~ scanning_roll(target_pose1, 0.05, yaw);
+    //~ 
+    //~ move_back_plane(x_plane, y_plane, yaw, d, x_target, y_target);
+    //~ move_right_plane(x_target, y_target, yaw, 0.4, x_target, y_target);
+	//~ ROS_INFO("x:%f,y:%f",x_target,y_target);
+	//~ target_pose1.x = x_target;
+	//~ target_pose1.y = y_target;
+	//~ target_pose1.z = 0.4;
+    //~ scanning_roll(target_pose1, 0.05, yaw);   
 
     /*Remove object*/
     collision_obj.id = "box1";
@@ -758,22 +876,73 @@ go2Pose(geometry_msgs::Point position, tf::Quaternion q, int attempts)
 	
 		if (success){
 			group_->execute(my_plan);
-			sleep(1.0);
+			//~ sleep(0.2);
 			return true;
 		}
 	}
 	return false;
 }
 
-void scanning_z(geometry_msgs::Point position, tf::Quaternion q, double z_init, double z_end, double interval)
+void scanning_z(geometry_msgs::Point position, tf::Quaternion q, double z_width, double interval)
 {
-	ROS_INFO("SCANNING_Z --> z_init:%f", z_init);
-	position.z = z_init;
-	while(position.z<z_end)
+
+	double aux_z = position.z;
+	
+	go2Pose(position, q, 20);
+	sleep(2.0);
+	
+	while(position.z < aux_z+z_width)
 	{
 		ROS_INFO("SCANNING_Z ---> x:%f,y:%f,z:%f",position.x,position.y,position.z);
 		go2Pose(position, q, 20);
 		if (saveScan()) 	position.z += interval;
+	}
+	
+	return;
+}
+
+void scanning_x(geometry_msgs::Point position, tf::Quaternion q, double x_width, double interval, double normal_angle)
+{
+
+	double i = 0.0;
+	geometry_msgs::Point aux = position;
+	
+	go2Pose(position, q, 20);
+	sleep(2.0);
+	while(i<x_width)
+	{
+		ROS_INFO("SCANNING_X ---> x:%f,y:%f,z:%f",aux.x,aux.y,aux.z);
+		go2Pose(aux, q, 20);
+		if (saveScan())
+		{
+			i += interval;
+			move_right_plane(position.x, position.y, normal_angle, i, aux.x, aux.y);
+		}
+	}
+	
+	return;
+}
+
+void scanning_roll(geometry_msgs::Point position, double interval, double normal_angle)
+{
+	tf::Quaternion q;
+	double i = 0.0;
+	geometry_msgs::Point aux = position;
+	
+	q.setRPY(i, 0.0, normal_angle);
+	go2Pose(position, q, 20);
+	sleep(2.0);
+	while(i<PI+interval)
+	{
+		ROS_INFO("SCANNING_X ---> x:%f,y:%f,z:%f",position.x,position.y,position.z);
+		q.setRPY(i, 0.0, normal_angle);
+		position.x = aux.x - 0.027*sin(i);
+		position.z = aux.z - 0.027*cos(i);
+		go2Pose(position, q, 20);
+		if (saveScan())
+		{
+			i += interval;
+		}
 	}
 	
 	return;

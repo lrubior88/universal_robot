@@ -19,6 +19,7 @@
   <build_depend>rospy</build_depend>
   <build_depend>pcl_conversions</build_depend>
   <build_depend>pcl_ros</build_depend>
+  <build_depend>pcl</build_depend>
   <build_depend>libpcl-all-dev</build_depend>
   <build_depend>laser_geometry</build_depend>
   <build_depend>tf</build_depend>
@@ -34,6 +35,7 @@
   <run_depend>rospy</run_depend>
   <run_depend>pcl_conversions</run_depend>
   <run_depend>pcl_ros</run_depend>
+  <run_depend>pcl</run_depend>
   <run_depend>libpcl-all-dev</run_depend> 
   <run_depend>laser_geometry</run_depend>
   <run_depend>tf</run_depend>

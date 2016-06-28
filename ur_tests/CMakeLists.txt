@@ -37,3 +37,9 @@ target_link_libraries(test2 ${catkin_LIBRARIES})
 
 add_executable(laser2pcl src/laser2pcl.cpp)
 target_link_libraries(laser2pcl ${catkin_LIBRARIES})
+
+add_executable(pcl_write src/pcl_write.cpp)
+target_link_libraries(pcl_write ${catkin_LIBRARIES})
+
+add_executable(pcl_read src/pcl_read.cpp)
+target_link_libraries(pcl_read ${catkin_LIBRARIES})
