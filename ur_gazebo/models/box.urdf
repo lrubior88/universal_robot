@@ -62,14 +62,14 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-          <box size="0.014 0.06 0.014"/>
+          <box size="0.0185 0.06 0.0185"/>
       </geometry>
     </visual>
     
 	<collision>
 		<origin xyz="0 0 0" rpy="0 0 0" />
 		<geometry>
-			<box size="0.014 0.06 0.014"/>
+			<box size="0.0185 0.06 0.0185"/>
 		</geometry>
 	</collision>
 
@@ -81,5 +81,85 @@
 	</inertial>
   </link>
   
+  <joint name="fixed_joint_3" type="fixed">
+      <parent link="box" />
+      <child link = "wrench_1" />
+      <origin xyz="0.4 -0.42 0.3" rpy="0.0 0.0 0.0 " />
+  </joint>  
+
+    <link name="wrench_1" >
+      <visual>
+		<origin xyz="0 0 0" rpy="1.5708 1.5708 0" />
+        <geometry>
+          <mesh filename="package://ur_gazebo/models/llave12.dae" />
+        </geometry>
+      </visual>
+      <collision>
+		<origin xyz="0 0 0" rpy="1.5708 1.5708 0" />
+		<geometry>
+			<cylinder length="0.12" radius="0.01" />
+		</geometry>
+      </collision>
+	  <inertial>
+		<mass value="0.01" />
+		<inertia ixx="0.01" ixy="0.0" ixz="0.0"
+				iyy="0.01" iyz="0.0"
+				izz="0.01" />
+	  </inertial>
+    </link>
+    
+  <joint name="fixed_joint_4" type="fixed">
+      <parent link="box" />
+      <child link = "wrench_2" />
+      <origin xyz="0.3 -0.42 0.32" rpy="0.0 0.0 0.0 " />
+  </joint>  
+
+    <link name="wrench_2" >
+      <visual>
+		<origin xyz="0 0 0" rpy="1.5708 1.5708 0" />
+        <geometry>
+          <mesh filename="package://ur_gazebo/models/llave19.stl" />
+        </geometry>
+      </visual>
+      <collision>
+		<origin xyz="0 0 0" rpy="1.5708 1.5708 0" />
+		<geometry>
+			<cylinder length="0.19" radius="0.01" />
+		</geometry>
+      </collision>
+	  <inertial>
+		<mass value="0.01" />
+		<inertia ixx="0.01" ixy="0.0" ixz="0.0"
+				iyy="0.01" iyz="0.0"
+				izz="0.01" />
+	  </inertial>
+    </link>
+
+  <joint name="fixed_joint_5" type="fixed">
+      <parent link="box" />
+      <child link = "wrench_3" />
+      <origin xyz="0.25 -0.42 0.31" rpy="0.0 0.0 0.0 " />
+  </joint>  
+
+    <link name="wrench_3" >
+      <visual>
+		<origin xyz="0 0 0" rpy="1.5708 1.5708 0" />
+        <geometry>
+          <mesh filename="package://ur_gazebo/models/llave16.stl" />
+        </geometry>
+      </visual>
+      <collision>
+		<origin xyz="0 0 0" rpy="1.5708 1.5708 0" />
+		<geometry>
+			<cylinder length="0.16" radius="0.01" />
+		</geometry>
+      </collision>
+	  <inertial>
+		<mass value="0.01" />
+		<inertia ixx="0.01" ixy="0.0" ixz="0.0"
+				iyy="0.01" iyz="0.0"
+				izz="0.01" />
+	  </inertial>
+    </link>
   
 </robot>
