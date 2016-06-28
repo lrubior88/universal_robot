@@ -6,7 +6,6 @@ Panels:
       Expanded:
         - /MotionPlanning1/Planning Request1
         - /TF1/Frames1
-        - /PointCloud21/Status1
       Splitter Ratio: 0.74256
     Tree Height: 366
   - Class: rviz/Help
@@ -350,7 +349,7 @@ Visualization Manager:
       Queue Size: 10
       Selectable: true
       Size (Pixels): 3
-      Size (m): 0.003
+      Size (m): 0.001
       Style: Flat Squares
       Topic: /hokuyo/pcl
       Unreliable: false
@@ -372,22 +371,22 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 1.83989
+      Distance: 2.27337
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.134692
-        Y: 0.526606
-        Z: 3.42727e-07
+        X: 0.0921006
+        Y: 1.05256
+        Z: 4.02332e-07
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.434796
+      Pitch: 0.104796
       Target Frame: world
       Value: XYOrbit (rviz)
-      Yaw: 2.70676
+      Yaw: 3.99172
     Saved: ~
 Window Geometry:
   Displays:
