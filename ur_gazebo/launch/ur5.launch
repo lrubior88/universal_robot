@@ -17,7 +17,7 @@
   </include>
 
   <!-- push robot_description to factory and spawn robot in gazebo -->
-  <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model robot -z 0.1" respawn="false" output="screen" />
+  <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model robot -z 0.15" respawn="false" output="screen" />
   <node name="spawn_box" pkg="gazebo_ros" type="spawn_model" args="-urdf -file $(find ur_gazebo)/models/box.urdf -model mbzirc_box  -x 0.0 -y 1.2 -z 1.5" 
  respawn="false" output="screen" />
 
