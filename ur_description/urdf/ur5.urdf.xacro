@@ -84,7 +84,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-          <box size="0.83 0.83 0.4"/>
+          <box size="0.405 0.605 0.345"/>
       </geometry>
      <material name="black">
         <color rgba="0.05 0.05 0.05 1"/>
@@ -94,7 +94,39 @@
 	<collision>
 		<origin xyz="0 0 0" rpy="0 0 0" />
 		<geometry>
-          <box size="0.83 0.83 0.4"/>
+          <box size="0.405 0.605 0.345"/>
+		</geometry>
+	</collision>
+
+	<inertial>
+		<mass value="100" />
+		<inertia ixx="1" ixy="0.0" ixz="0.0"
+				iyy="1" iyz="0.0"
+				izz="1" />
+	</inertial>  
+  </link>
+  
+  <joint name="${prefix}right_wheels_joint" type="fixed">
+    <axis xyz="0 0 1" />
+    <origin xyz="0.3025 0.0 0.0275" rpy="0 0 0"/>
+    <parent link="${prefix}mobile_base"/>
+    <child link="${prefix}right_wheels"/>
+  </joint>
+   <link name="${prefix}right_wheels">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+          <box size="0.18 0.605 0.4"/>
+      </geometry>
+     <material name="black">
+        <color rgba="0.05 0.05 0.05 1"/>
+      </material>
+    </visual>
+    
+	<collision>
+		<origin xyz="0 0 0" rpy="0 0 0" />
+		<geometry>
+          <box size="0.18 0.605 0.4"/>
 		</geometry>
 	</collision>
 
@@ -106,9 +138,76 @@
 	</inertial>
   </link>
   
+  <joint name="${prefix}left_wheels_joint" type="fixed">
+    <axis xyz="0 0 1" />
+    <origin xyz="-0.3025 0.0 0.0275" rpy="0 0 0"/>
+    <parent link="${prefix}mobile_base"/>
+    <child link="${prefix}left_wheels"/>
+  </joint>
+   <link name="${prefix}left_wheels">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+          <box size="0.18 0.605 0.4"/>
+      </geometry>
+     <material name="black">
+        <color rgba="0.05 0.05 0.05 1"/>
+      </material>
+    </visual>
+    
+	<collision>
+		<origin xyz="0 0 0" rpy="0 0 0" />
+		<geometry>
+          <box size="0.18 0.605 0.4"/>
+		</geometry>
+	</collision>
+
+	<inertial>
+		<mass value="100" />
+		<inertia ixx="1" ixy="0.0" ixz="0.0"
+				iyy="1" iyz="0.0"
+				izz="1" />
+	</inertial>
+  </link>
+  
+  <joint name="${prefix}lidar_joint" type="fixed">
+    <axis xyz="0 0 1" />
+    <origin xyz="0.0 0.3675 0.0" rpy="0 0 0"/>
+    <parent link="${prefix}mobile_base"/>
+    <child link="${prefix}lidar"/>
+  </joint>
+   <link name="${prefix}lidar">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+          <box size="0.405 0.13 0.345"/>
+      </geometry>
+     <material name="black">
+        <color rgba="0.05 0.05 0.05 1"/>
+      </material>
+    </visual>
+    
+	<collision>
+		<origin xyz="0 0 0" rpy="0 0 0" />
+		<geometry>
+          <box size="0.405 0.13 0.345"/>
+		</geometry>
+	</collision>
+
+	<inertial>
+		<mass value="100" />
+		<inertia ixx="1" ixy="0.0" ixz="0.0"
+				iyy="1" iyz="0.0"
+				izz="1" />
+	</inertial>
+  </link>
+  
+
+  
+  
   <joint name="${prefix}base_joint" type="fixed">
     <axis xyz="0 0 1" />
-    <origin xyz="0.0 0.0 0.2" rpy="0 0 0"/>
+    <origin xyz="0.0 0.0 0.1725" rpy="0 0 -1.5708"/>
     <parent link="${prefix}mobile_base"/>
     <child link="${prefix}base_link"/>
   </joint>
@@ -384,7 +483,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-          <box size="0.21 0.065 0.04"/>
+          <box size="0.19 0.065 0.04"/>
       </geometry>
      <material name="black">
         <color rgba="0.05 0.05 0.05 1"/>
@@ -394,7 +493,7 @@
 	<collision>
 		<origin xyz="0 0 0" rpy="0 0 0" />
 		<geometry>
-          <box size="0.21 0.065 0.04"/>
+          <box size="0.19 0.065 0.04"/>
 		</geometry>
 	</collision>
 
