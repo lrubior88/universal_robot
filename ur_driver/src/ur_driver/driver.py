@@ -200,7 +200,7 @@ class URConnection(object):
         log("Halted")
 
     def __on_packet(self, buf):
-        #print("OnPacket")
+        print("OnPacket")
         scp = SecondaryClientPacket.unpack(buf)
         
         if scp.robot_message:
