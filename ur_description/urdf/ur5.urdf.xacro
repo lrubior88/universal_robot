@@ -207,7 +207,7 @@
   
   <joint name="${prefix}base_joint" type="fixed">
     <axis xyz="0 0 1" />
-    <origin xyz="0.0 0.0 0.1725" rpy="0 0 -1.5708"/>
+    <origin xyz="0.0 0.0 0.1725" rpy="0 0 0"/>
     <parent link="${prefix}mobile_base"/>
     <child link="${prefix}base_link"/>
   </joint>
@@ -474,7 +474,7 @@
     
    <joint name="${prefix}gripper_joint" type="fixed">
     <axis xyz="0 1 0" />
-    <origin xyz="0.105 0.0 0.0" rpy="0 0 0"/>
+    <origin xyz="0.095 0.0 0.0" rpy="0 0 0"/>
     <parent link="${prefix}ee_link"/>
     <child link="${prefix}gripper"/>
   </joint>
@@ -483,7 +483,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-          <box size="0.19 0.065 0.04"/>
+          <box size="0.225 0.065 0.04"/>
       </geometry>
      <material name="black">
         <color rgba="0.05 0.05 0.05 1"/>
@@ -493,7 +493,7 @@
 	<collision>
 		<origin xyz="0 0 0" rpy="0 0 0" />
 		<geometry>
-          <box size="0.19 0.065 0.04"/>
+          <box size="0.225 0.065 0.04"/>
 		</geometry>
 	</collision>
 
@@ -570,7 +570,74 @@
         <frameName>hokuyo_link</frameName>
       </plugin>
     </sensor>
-  </gazebo>   
+  </gazebo>  
+  
+   <!-- cervical links --> 
+   <joint name="${prefix}cervical1_joint" type="fixed">
+    <axis xyz="0 1 0" />
+    <origin xyz="0.09 0.0 0.2" rpy="0 0 0"/>
+    <parent link="${prefix}upper_arm_link"/>
+    <child link="${prefix}cervical1_link"/>
+  </joint>
+  
+  <link name="${prefix}cervical1_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+          <box size="0.08 0.06 0.23"/>
+      </geometry>
+     <material name="black">
+        <color rgba="0.05 0.05 0.05 1"/>
+      </material>
+    </visual>
+    
+	<collision>
+		<origin xyz="0 0 0" rpy="0 0 0" />
+		<geometry>
+          <box size="0.08 0.06 0.23"/>
+		</geometry>
+	</collision>
+
+	<inertial>
+		<mass value="0.01" />
+		<inertia ixx="0.01" ixy="0.0" ixz="0.0"
+				iyy="0.01" iyz="0.0"
+				izz="0.01" />
+	</inertial>
+  </link>
+  
+   <joint name="${prefix}cervical2_joint" type="fixed">
+    <axis xyz="0 1 0" />
+    <origin xyz="0.0 -0.08 0.205" rpy="0 0 0"/>
+    <parent link="${prefix}forearm_link"/>
+    <child link="${prefix}cervical2_link"/>
+  </joint>
+  
+  <link name="${prefix}cervical2_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+          <box size="0.06 0.08 0.27"/>
+      </geometry>
+     <material name="black">
+        <color rgba="0.05 0.05 0.05 1"/>
+      </material>
+    </visual>
+    
+	<collision>
+		<origin xyz="0 0 0" rpy="0 0 0" />
+		<geometry>
+          <box size="0.06 0.08 0.27"/>
+		</geometry>
+	</collision>
+
+	<inertial>
+		<mass value="0.01" />
+		<inertia ixx="0.01" ixy="0.0" ixz="0.0"
+				iyy="0.01" iyz="0.0"
+				izz="0.01" />
+	</inertial>
+  </link> 
     
     
     
