@@ -70,10 +70,10 @@ def callback(data):
 
 def get_states():
     #~ rospy.init_node('UR_State_Getter')
-    rospy.Subscriber("io_states", IOStates, callback)
+    rospy.Subscriber("/ur_driver/io_states", IOStates, callback)
     
 def set_states():
-    rospy.wait_for_service('set_io')
+    rospy.wait_for_service('/ur_driver/set_io')
     global set_io
-    set_io = rospy.ServiceProxy('set_io', SetIO)
+    set_io = rospy.ServiceProxy('/ur_driver/set_io', SetIO)
 
