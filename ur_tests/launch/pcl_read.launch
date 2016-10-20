@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<launch>
-
-  <node name="pcl_read" pkg="ur_tests" type="pcl_read" output="screen">
-	  <param name="pcd_path" type="string" value="/home/luis/catkin_ws/src/universal_robot/ur_tests/pcd/handle_185.pcd"/>
-  </node>
-
-</launch>
