@@ -8,8 +8,7 @@
   <!-- GDB Debug Option -->
   <arg name="debug" default="false" />
   <arg unless="$(arg debug)" name="launch_prefix" value="" />
-  <arg     if="$(arg debug)" name="launch_prefix"
-	   value="gdb -x $(find ur5_moveit_config)/launch/gdb_settings.gdb --ex run --args" />
+  <arg     if="$(arg debug)" name="launch_prefix" value="gdb --ex run --args" />
 
   <!-- Verbose Mode Option -->
   <arg name="info" default="$(arg debug)" />
@@ -52,7 +51,6 @@
     <!-- MoveGroup capabilities to load -->
     <param name="capabilities" value="move_group/MoveGroupCartesianPathService
 				      move_group/MoveGroupExecuteService
-				      move_group/MoveGroupExecuteTrajectoryAction
 				      move_group/MoveGroupKinematicsService
 				      move_group/MoveGroupMoveAction
 				      move_group/MoveGroupPickPlaceAction
@@ -60,7 +58,6 @@
 				      move_group/MoveGroupQueryPlannersService
 				      move_group/MoveGroupStateValidationService
 				      move_group/MoveGroupGetPlanningSceneService
-				      move_group/ApplyPlanningSceneService
 				      move_group/ClearOctomapService
 				      " />
 
